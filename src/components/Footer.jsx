@@ -16,18 +16,18 @@ export default function Footer() {
       sx={{
         width: "100%",
         marginTop: "3rem",
+        marginBottom: "1rem",
         color: "gray",
         borderTop: "white solid 1px",
-        display: "flex",
-        justifyContent: "center",
       }}
     >
       <Box
         sx={{
+          marginX: "auto",
           display: "flex",
           justifyContent: "space-between",
-          flexWrap: "wrap",
           paddingY: "1rem",
+          maxWidth: "70%",
         }}
       >
         <Box
@@ -138,6 +138,11 @@ export default function Footer() {
             )}
           </List>
         </Box>
+      </Box>
+      <Box sx={{ maxWidth: "70%", marginX: "auto" }}>
+        <Typography variant="caption" color="white">
+          Copyright © 2022 Movies. All Rights Reserved.
+        </Typography>
       </Box>
     </Box>
   );
