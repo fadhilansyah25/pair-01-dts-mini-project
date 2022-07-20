@@ -17,8 +17,16 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import CardGiftcardIcon from "@mui/icons-material/CardGiftcard";
 import Logo from "../images/Logo.svg";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { useNavigate } from "react-router-dom";
 
-const pages = ["Home", "Series", "Movies", "New and Popular", "My List"];
+const pages = [
+  { title: "Home", nav: "/" },
+  { title: "Series", nav: "/series" },
+  { title: "Movies", nav: "/movies" },
+  { title: "New and Popular", nav: "/new-and-popular" },
+  { title: "My List", nav: "/mylist" },
+];
+
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 const theme = createTheme({
   components: {
@@ -36,6 +44,7 @@ export default function Navbar() {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [username, setUsername] = useState("Fadil Ardiansyah");
+  const navigate = useNavigate();
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -55,7 +64,11 @@ export default function Navbar() {
   return (
     <AppBar
       position="fixed"
-      sx={{ backgroundColor: "#141414", maxHeight: "94px", padding: "0 1.5rem" }}
+      sx={{
+        backgroundColor: "#141414",
+        maxHeight: "94px",
+        padding: "0 1.5rem",
+      }}
     >
       <Container maxWidth="xl">
         <Toolbar disableGutters>
@@ -67,7 +80,6 @@ export default function Navbar() {
                 xs: "10rem",
               },
             }}
-            alt="The house from the offer."
             src={Logo}
           />
 
@@ -100,9 +112,9 @@ export default function Navbar() {
                 display: { xs: "block", md: "none" },
               }}
             >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
+              {pages.map((page, id) => (
+                <MenuItem key={id} onClick={() => navigate(page.nav)}>
+                  <Typography textAlign="center">{page.title}</Typography>
                 </MenuItem>
               ))}
             </Menu>
@@ -134,10 +146,10 @@ export default function Navbar() {
           ></Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {pages.map((page) => (
+            {pages.map((page, id) => (
               <Button
-                key={page}
-                onClick={handleCloseNavMenu}
+                key={id}
+                onClick={() => navigate(page.nav)}
                 sx={{
                   my: 2,
                   color: "white",
@@ -145,7 +157,7 @@ export default function Navbar() {
                   textTransform: "none",
                 }}
               >
-                {page}
+                {page.title}
               </Button>
             ))}
           </Box>

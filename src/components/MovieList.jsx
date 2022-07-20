@@ -73,9 +73,11 @@ export default function MovieList({ data, categoryName }) {
           rtl={false}
           showDots={false}
         >
-          {data?.map((data, i) => (
-            <CardMovie key={i} data={data}></CardMovie>
-          ))}
+          {data?.map((data, i) =>
+            data?.poster_path ? (
+              <CardMovie key={i} data={data}></CardMovie>
+            ) : null
+          )}
         </Carousel>
       ) : null}
     </>
