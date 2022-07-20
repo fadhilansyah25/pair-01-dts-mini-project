@@ -10,7 +10,7 @@ export default function MovieList({ data, categoryName }) {
       <Typography
         variant="h6"
         color="white"
-        sx={{ fontWeight: "600", marginBottom: "1rem", textTransform: "capitalize" }}
+        sx={{ fontWeight: "500", marginBottom: "1rem" }}
       >
         {categoryName}
       </Typography>

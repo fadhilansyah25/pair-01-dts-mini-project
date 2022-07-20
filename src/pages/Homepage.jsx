@@ -3,14 +3,23 @@ import Carrousel from "../components/Carrousel";
 import HeroBanner from "../components/HeroBanner";
 import MovieList from "../components/MovieList";
 import Navbar from "../components/Navbar";
-import Footer from '../components/Footer'
-import { useGetTrendingMoviesQuery, useGetPopularMoviesQuery } from "../services/requestTMDbAPI";
+import Footer from "../components/Footer";
+import {
+  useGetTrendingMoviesQuery,
+  useGetPopularMoviesQuery,
+  useGetPopularTvSeasonsQuery,
+  useGetUpcomingMoviesQuery,
+  useGetTopRatedTvSeasonsQuery,
+} from "../services/requestTMDbAPI";
 
 export default function Homepage() {
   const { data: trendingMoivesData } = useGetTrendingMoviesQuery();
-  const { data: popularMoviesData} = useGetPopularMoviesQuery()
+  const { data: popularMoviesData } = useGetPopularMoviesQuery();
+  const { data: popularTvSeasonsData } = useGetPopularTvSeasonsQuery();
+  const { data: upcomingMoviesData } = useGetUpcomingMoviesQuery();
+  const { data: topRatedTvSeasonsData } = useGetTopRatedTvSeasonsQuery();
 
-  console.log(popularMoviesData)
+  console.log(popularMoviesData);
   return (
     <>
       <Navbar></Navbar>
@@ -22,13 +31,28 @@ export default function Homepage() {
         </Carrousel>
       </section>
       <section style={{ margin: "3rem 3rem 0" }}>
-        <MovieList categoryName="popular" data={popularMoviesData?.results}></MovieList>
+        <MovieList
+          categoryName="Popular Movies"
+          data={popularMoviesData?.results}
+        ></MovieList>
       </section>
       <section style={{ margin: "3rem 3rem 0" }}>
-        <MovieList categoryName="movie " data={popularMoviesData?.results}></MovieList>
+        <MovieList
+          categoryName="TV Seasons"
+          data={popularTvSeasonsData?.results}
+        ></MovieList>
       </section>
       <section style={{ margin: "3rem 3rem 0" }}>
-        <MovieList categoryName="series" data={popularMoviesData?.results}></MovieList>
+        <MovieList
+          categoryName="Top Rated TV Seasons"
+          data={topRatedTvSeasonsData?.results}
+        ></MovieList>
+      </section>
+      <section style={{ margin: "3rem 3rem 0" }}>
+        <MovieList
+          categoryName="Upcoming Movies"
+          data={upcomingMoviesData?.results}
+        ></MovieList>
       </section>
       <Footer></Footer>
     </>
