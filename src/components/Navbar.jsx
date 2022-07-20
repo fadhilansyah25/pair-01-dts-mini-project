@@ -54,7 +54,7 @@ export default function Navbar() {
 
   return (
     <AppBar
-      position="static"
+      position="fixed"
       sx={{ backgroundColor: "#141414", maxHeight: "94px", padding: "0 1.5rem" }}
     >
       <Container maxWidth="xl">

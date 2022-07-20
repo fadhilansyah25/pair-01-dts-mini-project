@@ -2,7 +2,7 @@ import React from "react";
 import { Box, Typography, Rating, Button } from "@mui/material";
 import genres from "../json/genre.json";
 
-export default function HeroBanner(props) {
+export default function HeroBanner({data}) {
   return (
     <Box alt="poster" sx={{ display: "flex", height: "80vh" }}>
       <Box
@@ -20,20 +20,20 @@ export default function HeroBanner(props) {
             color="white"
             sx={{ fontWeight: "700", fontSize: "3rem", lineHeight: "3.5rem", marginBottom: "1rem" }}
           >
-            {props?.item?.title || props?.item?.name}
+            {data?.title || data?.name}
           </Typography>
           <Typography variant="caption" color="white">
-            {props?.item?.genre_ids?.map((id, i) =>
+            {data?.genre_ids?.map((id, i) =>
               genres.map((genre) =>
                 genre.id === id ? ` | ${genre.name}` : null
               )
             )}
           </Typography>
           <Typography color="yellow" sx={{ textTransform: "capitalize" }}>
-            {props?.item?.media_type}
+            {data?.media_type}
           </Typography>
           <Rating
-            defaultValue={props?.item?.vote_average / 2}
+            defaultValue={data?.vote_average / 2}
             readOnly
             precision={0.5}
             size="small"
@@ -43,7 +43,7 @@ export default function HeroBanner(props) {
             color={"white"}
             sx={{ marginTop: "2rem" }}
           >
-            {props?.item?.overview}
+            {data?.overview}
           </Typography>
         </Box>
         <Box>
@@ -75,7 +75,7 @@ export default function HeroBanner(props) {
       <Box
         sx={{
           width: "70%",
-          backgroundImage: `url(https://image.tmdb.org/t/p/original/${props?.item.backdrop_path})`,
+          backgroundImage: `url(https://image.tmdb.org/t/p/original/${data?.backdrop_path})`,
           backgroundSize: "cover",
         }}
       >
