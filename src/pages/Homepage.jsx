@@ -37,13 +37,13 @@ export default function Homepage() {
       </section>
       <section style={{ margin: "3rem 3rem 0" }}>
         <MovieList
-          categoryName="TV Seasons"
+          categoryName="TV Seasons / Series"
           data={popularTvSeasonsData?.results}
         ></MovieList>
       </section>
       <section style={{ margin: "3rem 3rem 0" }}>
         <MovieList
-          categoryName="Top Rated TV Seasons"
+          categoryName="Top Rated TV Seasons / Series"
           data={topRatedTvSeasonsData?.results}
         ></MovieList>
       </section>

@@ -82,6 +82,15 @@ export default function CastList({ data, categoryName }) {
             )}
         </Carousel>
       ) : null}
+      <hr
+        style={{
+          marginTop: "2rem",
+          height: "1px",
+          borderWidth: 0,
+          color: "gray",
+          backgroundColor: "gray",
+        }}
+      />
     </>
   );
 }

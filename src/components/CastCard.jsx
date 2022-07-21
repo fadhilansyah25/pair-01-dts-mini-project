@@ -3,7 +3,8 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import { ThemeProvider, createTheme  } from "@mui/material/styles";
+
+import { ThemeProvider, createTheme } from "@mui/material/styles";
 
 const darkTheme = createTheme({
   palette: {
@@ -18,11 +19,19 @@ export default function MediaCard({ data }) {
         <CardMedia
           component="img"
           height="220"
-          image={`https://image.tmdb.org/t/p/w500/${data?.profile_path}`}
+          image={`https://image.tmdb.org/t/p/w500/${data?.profile_path?.replace(
+            "/",
+            ""
+          )}`}
           alt={data?.original_name}
         />
         <CardContent>
-          <Typography gutterBottom variant="body1" fontSize={"0.9rem"} component="div">
+          <Typography
+            gutterBottom
+            variant="body1"
+            fontSize={"0.9rem"}
+            component="div"
+          >
             {data?.original_name}
           </Typography>
           <Typography variant="body2" color="text.secondary">
