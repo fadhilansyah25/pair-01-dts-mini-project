@@ -9,7 +9,6 @@ export default function DetailsBanner({ data }) {
 
     maximumFractionDigits: 0, // (causes 2500.99 to be printed as $2,501)
   });
-  console.log(data);
   return data ? (
     <Box
       sx={{

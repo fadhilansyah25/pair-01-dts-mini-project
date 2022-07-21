@@ -41,6 +41,11 @@ export const requestTMDbAPI = createApi({
         url: `${media_type}/${id}/recommendations?api_key=${process.env.REACT_APP_TMDB_API_KEY}`,
       }),
     }),
+    getCreditsTvOrMovie: builder.query({
+      query: ({ media_type, id }) => ({
+        url: `${media_type}/${id}/credits?api_key=${process.env.REACT_APP_TMDB_API_KEY}`,
+      }),
+    }),
   }),
 });
 
@@ -51,5 +56,6 @@ export const {
   useGetUpcomingMoviesQuery,
   useGetTopRatedTvSeasonsQuery,
   useGetDetailsTvOrMovieQuery,
-  useGetRecommendationsTvOrMovieQuery
+  useGetRecommendationsTvOrMovieQuery,
+  useGetCreditsTvOrMovieQuery,
 } = requestTMDbAPI;

@@ -1,8 +1,10 @@
 import React from "react";
 import { Box, Typography, Rating, Button } from "@mui/material";
 import genres from "../json/genre.json";
+import { useNavigate } from "react-router-dom";
 
-export default function HeroBanner({data}) {
+export default function HeroBanner({ data }) {
+  const navigate = useNavigate();
   return (
     <Box alt="poster" sx={{ display: "flex", height: "80vh" }}>
       <Box
@@ -18,7 +20,12 @@ export default function HeroBanner({data}) {
         <Box>
           <Typography
             color="white"
-            sx={{ fontWeight: "700", fontSize: "3rem", lineHeight: "3.5rem", marginBottom: "1rem" }}
+            sx={{
+              fontWeight: "700",
+              fontSize: "3rem",
+              lineHeight: "3.5rem",
+              marginBottom: "1rem",
+            }}
           >
             {data?.title || data?.name}
           </Typography>
@@ -56,19 +63,9 @@ export default function HeroBanner({data}) {
               marginRight: "1rem",
               paddingX: "3rem",
             }}
+            onClick={() => navigate(`/details/${data?.media_type}/${data?.id}`)}
           >
-            Watch
-          </Button>
-          <Button
-            variant="text"
-            sx={{
-              borderRadius: "0",
-              borderColor: "white",
-              color: "white",
-              paddingX: "1rem",
-            }}
-          >
-            Details
+            Watch Trailer
           </Button>
         </Box>
       </Box>
