@@ -19,7 +19,6 @@ export default function Homepage() {
   const { data: upcomingMoviesData } = useGetUpcomingMoviesQuery();
   const { data: topRatedTvSeasonsData } = useGetTopRatedTvSeasonsQuery();
 
-  console.log(popularMoviesData);
   return (
     <>
       <Navbar></Navbar>

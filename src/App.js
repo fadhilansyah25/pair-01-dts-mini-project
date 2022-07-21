@@ -1,4 +1,4 @@
-import Routes from "./routes/index.js";
+import Routes from "./routes/Routers.js";
 import { Provider } from "react-redux";
 import { store } from "./app/store";
 

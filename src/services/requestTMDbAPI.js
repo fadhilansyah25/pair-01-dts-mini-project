@@ -31,6 +31,16 @@ export const requestTMDbAPI = createApi({
         url: `tv/top_rated?api_key=${process.env.REACT_APP_TMDB_API_KEY}`,
       }),
     }),
+    getDetailsTvOrMovie: builder.query({
+      query: ({ media_type, id }) => ({
+        url: `${media_type}/${id}?api_key=${process.env.REACT_APP_TMDB_API_KEY}`,
+      }),
+    }),
+    getRecommendationsTvOrMovie: builder.query({
+      query: ({ media_type, id }) => ({
+        url: `${media_type}/${id}/recommendations?api_key=${process.env.REACT_APP_TMDB_API_KEY}`,
+      }),
+    }),
   }),
 });
 
@@ -40,4 +50,6 @@ export const {
   useGetPopularTvSeasonsQuery,
   useGetUpcomingMoviesQuery,
   useGetTopRatedTvSeasonsQuery,
+  useGetDetailsTvOrMovieQuery,
+  useGetRecommendationsTvOrMovieQuery
 } = requestTMDbAPI;
