@@ -6,62 +6,68 @@ export const requestTMDbAPI = createApi({
     baseUrl: "https://api.themoviedb.org/3/",
   }),
   endpoints: (builder) => ({
-    getTrendingMovies: builder.query({
-      query: () => ({
-        url: `trending/all/week?api_key=${process.env.REACT_APP_TMDB_API_KEY}`,
+    getTrending: builder.query({
+      query: ({media_type}) => ({
+        url: `trending/${media_type}/week?api_key=${process.env.REACT_APP_TMDB_API_KEY}`,
       }),
     }),
-    getPopularMovies: builder.query({
-      query: () => ({
-        url: `movie/popular?api_key=${process.env.REACT_APP_TMDB_API_KEY}`,
+    getPopular: builder.query({
+      query: ({media_type}) => ({
+        url: `${media_type}/popular?api_key=${process.env.REACT_APP_TMDB_API_KEY}`,
       }),
     }),
-    getPopularTvSeasons: builder.query({
-      query: () => ({
-        url: `tv/popular?api_key=${process.env.REACT_APP_TMDB_API_KEY}`,
+    getUpcoming: builder.query({
+      query: ({media_type}) => ({
+        url: `${media_type}/upcoming?api_key=${process.env.REACT_APP_TMDB_API_KEY}`,
       }),
     }),
-    getUpcomingMovies: builder.query({
-      query: () => ({
-        url: `movie/upcoming?api_key=${process.env.REACT_APP_TMDB_API_KEY}`,
+    getTopRated: builder.query({
+      query: ({media_type}) => ({
+        url: `${media_type}/top_rated?api_key=${process.env.REACT_APP_TMDB_API_KEY}`,
       }),
     }),
-    getTopRatedTvSeasons: builder.query({
-      query: () => ({
-        url: `tv/top_rated?api_key=${process.env.REACT_APP_TMDB_API_KEY}`,
+    getLatest: builder.query({
+      query: ({media_type}) => ({
+        url : `/discover/${media_type}?api_key=${process.env.REACT_APP_TMDB_API_KEY}&language=en-US&sort_by=release_date.asc&page=1&primary_release_year=2022&with_watch_monetization_types=flatrate`,
       }),
     }),
-    getDetailsTvOrMovie: builder.query({
+    getDetails: builder.query({
       query: ({ media_type, id }) => ({
         url: `${media_type}/${id}?api_key=${process.env.REACT_APP_TMDB_API_KEY}`,
       }),
     }),
-    getRecommendationsTvOrMovie: builder.query({
+    getRecommendations: builder.query({
       query: ({ media_type, id }) => ({
         url: `${media_type}/${id}/recommendations?api_key=${process.env.REACT_APP_TMDB_API_KEY}`,
       }),
     }),
-    getCreditsTvOrMovie: builder.query({
+    getCredits: builder.query({
       query: ({ media_type, id }) => ({
         url: `${media_type}/${id}/credits?api_key=${process.env.REACT_APP_TMDB_API_KEY}`,
       }),
     }),
-    getSimilarTvOrMovie: builder.query({
+    getSimilar: builder.query({
       query: ({ media_type, id }) => ({
         url: `${media_type}/${id}/similar?api_key=${process.env.REACT_APP_TMDB_API_KEY}`,
+      }),
+    }),
+    getTvAiringToday: builder.query({
+      query: () => ({
+        url: `tv/airing_today?api_key=${process.env.REACT_APP_TMDB_API_KEY}`,
       }),
     }),
   }),
 });
 
 export const {
-  useGetTrendingMoviesQuery,
-  useGetPopularMoviesQuery,
-  useGetPopularTvSeasonsQuery,
-  useGetUpcomingMoviesQuery,
-  useGetTopRatedTvSeasonsQuery,
-  useGetDetailsTvOrMovieQuery,
-  useGetRecommendationsTvOrMovieQuery,
-  useGetCreditsTvOrMovieQuery,
-  useGetSimilarTvOrMovieQuery
+  useGetCreditsQuery,
+  useGetDetailsQuery,
+  useGetRecommendationsQuery,
+  useGetSimilarQuery,
+  useGetTrendingQuery,
+  useGetTopRatedQuery,
+  useGetUpcomingQuery,
+  useGetPopularQuery,
+  useGetLatestQuery,
+  useGetTvAiringTodayQuery,
 } = requestTMDbAPI;

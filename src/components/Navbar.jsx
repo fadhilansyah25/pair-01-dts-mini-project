@@ -25,7 +25,7 @@ import { logOut, auth } from "../app/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 const pages = [
   { title: "Home", nav: "/" },
-  { title: "Series", nav: "/series" },
+  { title: "TV & Series", nav: "/series" },
   { title: "Movies", nav: "/movies" },
   { title: "New and Popular", nav: "/new-and-popular" },
   { title: "My List", nav: "/mylist" },

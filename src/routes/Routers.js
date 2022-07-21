@@ -6,6 +6,8 @@ import LoginPage from "../pages/LoginPage";
 import RegisterPage from "../pages/RegisterPage";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../app/firebase";
+import Seriespage from "../pages/Seriespage";
+import Moviespage from "../pages/Moviespage";
 
 export default function Routers() {
   return (
@@ -17,6 +19,22 @@ export default function Routers() {
           element={
             <PrivateRoute>
               <Detailpage />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/series"
+          element={
+            <PrivateRoute>
+              <Seriespage />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/movies"
+          element={
+            <PrivateRoute>
+              <Moviespage />
             </PrivateRoute>
           }
         />

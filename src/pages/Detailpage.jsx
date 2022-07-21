@@ -2,28 +2,29 @@ import React from "react";
 import Footer from "../components/Footer";
 import MovieList from "../components/MovieList";
 import {
-  useGetCreditsTvOrMovieQuery,
-  useGetDetailsTvOrMovieQuery,
-  useGetRecommendationsTvOrMovieQuery,
-  useGetSimilarTvOrMovieQuery,
+  useGetCreditsQuery,
+  useGetDetailsQuery,
+  useGetRecommendationsQuery,
+  useGetSimilarQuery,
 } from "../services/requestTMDbAPI";
 import { useParams } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import DetailsBanner from "../components/DetailsBanner";
 import CastList from "../components/CastList";
+
 export default function Detailpage() {
   const { id, media_type } = useParams();
 
-  const { data: detailsData } = useGetDetailsTvOrMovieQuery({ id, media_type });
-  const { data: recommendationsData } = useGetRecommendationsTvOrMovieQuery({
+  const { data: detailsData } = useGetDetailsQuery({ id, media_type });
+  const { data: recommendationsData } = useGetRecommendationsQuery({
     id,
     media_type,
   });
-  const { data: similiarsData } = useGetSimilarTvOrMovieQuery({
+  const { data: similiarsData } = useGetSimilarQuery({
     id,
     media_type,
   });
-  const { data: creditsData } = useGetCreditsTvOrMovieQuery({ id, media_type });
+  const { data: creditsData } = useGetCreditsQuery({ id, media_type });
 
   return (
     <>
