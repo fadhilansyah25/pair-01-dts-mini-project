@@ -17,6 +17,10 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import CardGiftcardIcon from "@mui/icons-material/CardGiftcard";
 import Logo from "../images/Logo.svg";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { useAuthState } from "react-firebase-hooks/auth"
+import { signOut } from "firebase/auth"
+import { auth } from "../config/firebase"
+import { useNavigate } from "react-router-dom";
 
 const pages = ["Home", "Series", "Movies", "New and Popular", "My List"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
@@ -33,9 +37,21 @@ const theme = createTheme({
 });
 
 export default function Navbar() {
+  const [user] = useAuthState(auth)
+  const navigate = useNavigate()
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [username, setUsername] = useState("Fadil Ardiansyah");
+  
+  const handleLogout = async () => {
+    try {
+      signOut(auth)
+      navigate("/login")
+    }
+    catch (error) {
+      console.log(error)
+    }
+  }
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -55,7 +71,11 @@ export default function Navbar() {
   return (
     <AppBar
       position="fixed"
-      sx={{ backgroundColor: "#141414", maxHeight: "94px", padding: "0 1.5rem" }}
+      sx={{
+        backgroundColor: "#141414",
+        maxHeight: "94px",
+        padding: "0 1.5rem",
+      }}
     >
       <Container maxWidth="xl">
         <Toolbar disableGutters>
@@ -184,7 +204,7 @@ export default function Navbar() {
                 fontSize: "0.9rem",
               }}
             >
-              {username}
+              {user?.email}
             </Typography>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>

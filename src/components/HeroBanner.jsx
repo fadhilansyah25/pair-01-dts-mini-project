@@ -2,7 +2,7 @@ import React from "react";
 import { Box, Typography, Rating, Button } from "@mui/material";
 import genres from "../json/genre.json";
 
-export default function HeroBanner({data}) {
+export default function HeroBanner({ data }) {
   return (
     <Box alt="poster" sx={{ display: "flex", height: "80vh" }}>
       <Box
@@ -18,7 +18,12 @@ export default function HeroBanner({data}) {
         <Box>
           <Typography
             color="white"
-            sx={{ fontWeight: "700", fontSize: "3rem", lineHeight: "3.5rem", marginBottom: "1rem" }}
+            sx={{
+              fontWeight: "700",
+              fontSize: "3rem",
+              lineHeight: "3.5rem",
+              marginBottom: "1rem",
+            }}
           >
             {data?.title || data?.name}
           </Typography>
