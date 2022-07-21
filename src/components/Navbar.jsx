@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -17,9 +17,9 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import CardGiftcardIcon from "@mui/icons-material/CardGiftcard";
 import Logo from "../images/Logo.svg";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { useAuthState } from "react-firebase-hooks/auth"
-import { signOut } from "firebase/auth"
-import { auth } from "../config/firebase"
+import { useAuthState } from "react-firebase-hooks/auth";
+import { signOut } from "firebase/auth";
+import { auth } from "../config/firebase";
 import { useNavigate } from "react-router-dom";
 
 const pages = ["Home", "Series", "Movies", "New and Popular", "My List"];
@@ -37,21 +37,20 @@ const theme = createTheme({
 });
 
 export default function Navbar() {
-  const [user] = useAuthState(auth)
-  const navigate = useNavigate()
+  const [user] = useAuthState(auth);
+  const navigate = useNavigate();
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
-  const [username, setUsername] = useState("Fadil Ardiansyah");
-  
+  // const [username, setUsername] = useState("Fadil Ardiansyah");
+
   const handleLogout = async () => {
     try {
-      signOut(auth)
-      navigate("/login")
+      signOut(auth);
+      navigate("/login");
+    } catch (error) {
+      console.log(error);
     }
-    catch (error) {
-      console.log(error)
-    }
-  }
+  };
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -67,6 +66,8 @@ export default function Navbar() {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+  useEffect(() => console.log(user), []);
 
   return (
     <AppBar
@@ -204,7 +205,7 @@ export default function Navbar() {
                 fontSize: "0.9rem",
               }}
             >
-              {user?.email}
+              {user?.displayName}
             </Typography>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
@@ -228,7 +229,12 @@ export default function Navbar() {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                <MenuItem
+                  key={setting}
+                  onClick={
+                    setting === "Logout" ? handleLogout : handleCloseUserMenu
+                  }
+                >
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
               ))}
