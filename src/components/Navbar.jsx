@@ -11,6 +11,7 @@ import {
   Button,
   Tooltip,
   MenuItem,
+  Link,
 } from "@mui/material";
 import UserIcon from "../images/UserIcon.svg";
 import SearchIcon from "@mui/icons-material/Search";
@@ -52,7 +53,7 @@ export default function Navbar() {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
   const navigate = useNavigate();
-  const [user, loading] = useAuthState(auth)
+  const [user, loading] = useAuthState(auth);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -80,17 +81,18 @@ export default function Navbar() {
     >
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <Box
-            component="img"
-            sx={{
-              display: { xs: "none", md: "flex" },
-              marginRight: {
-                xs: "10rem",
-              },
-            }}
-            src={Logo}
-          />
-
+          <Link component="button" onClick={() => navigate("/")}>
+            <Box
+              component="img"
+              sx={{
+                display: { xs: "none", md: "flex" },
+                marginRight: {
+                  xs: "10rem",
+                },
+              }}
+              src={Logo}
+            />
+          </Link>
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <IconButton
               size="large"
@@ -170,7 +172,7 @@ export default function Navbar() {
             ))}
           </Box>
 
-          {user ? (
+          {loading ? null : user ? (
             <Box sx={{ flexGrow: 0 }}>
               <Box
                 sx={{
@@ -250,7 +252,7 @@ export default function Navbar() {
               color="error"
               variant="contained"
               sx={{ textTransform: "none", px: 5, borderRadius: 0 }}
-              onClick={()=> navigate("/login")}
+              onClick={() => navigate("/login")}
             >
               Sign In
             </Button>

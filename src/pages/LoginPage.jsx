@@ -67,14 +67,16 @@ export default function SignInSide() {
               alignItems: "center",
             }}
           >
-            <Box
-              component="img"
-              sx={{
-                width: "5rem",
-                marginBottom: "1rem",
-              }}
-              src={Logo}
-            />
+            <Link onClick={() => navigate("/")} component="button">
+              <Box
+                component="img"
+                sx={{
+                  width: "5rem",
+                  marginBottom: "1rem",
+                }}
+                src={Logo}
+              />
+            </Link>
             <Typography component="h1" variant="h5">
               Sign in
             </Typography>

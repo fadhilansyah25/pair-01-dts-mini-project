@@ -1,19 +1,20 @@
 import * as React from "react";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
+import {
+  Button,
+  CssBaseline,
+  TextField,
+  FormControlLabel,
+  Checkbox,
+  Link,
+  Grid,
+  Box,
+  Typography,
+  Container,
+} from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
 import { registerWithEmailAndPassword } from "../app/firebase";
+import Logo from "../images/Logo.svg";
 
 const theme = createTheme({
   palette: {
@@ -32,7 +33,11 @@ export default function RegisterPage() {
       email: data.get("email"),
       password: data.get("password"),
     });
-    registerWithEmailAndPassword(`${data.get("firstName")} ${data.get("lastName")}`, data.get("email"), data.get("password"))
+    registerWithEmailAndPassword(
+      `${data.get("firstName")} ${data.get("lastName")}`,
+      data.get("email"),
+      data.get("password")
+    );
   };
 
   return (
@@ -47,9 +52,16 @@ export default function RegisterPage() {
             alignItems: "center",
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-            <LockOutlinedIcon />
-          </Avatar>
+          <Link onClick={() => navigate("/")} component="button">
+            <Box
+              component="img"
+              sx={{
+                width: "5rem",
+                marginBottom: "1rem",
+              }}
+              src={Logo}
+            />
+          </Link>
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
