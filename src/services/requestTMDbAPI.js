@@ -56,6 +56,11 @@ export const requestTMDbAPI = createApi({
         url: `tv/airing_today?api_key=${process.env.REACT_APP_TMDB_API_KEY}`,
       }),
     }),
+    getTvOnTheAir: builder.query({
+      query: () => ({
+        url: `tv/on_the_air?api_key=${process.env.REACT_APP_TMDB_API_KEY}`,
+      }),
+    }),
   }),
 });
 
@@ -70,4 +75,5 @@ export const {
   useGetPopularQuery,
   useGetLatestQuery,
   useGetTvAiringTodayQuery,
+  useGetTvOnTheAirQuery,
 } = requestTMDbAPI;

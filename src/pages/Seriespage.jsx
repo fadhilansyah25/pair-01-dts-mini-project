@@ -5,11 +5,11 @@ import MovieList from "../components/MovieList";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import {
-  useGetLatestQuery,
   useGetPopularQuery,
   useGetTopRatedQuery,
   useGetTrendingQuery,
   useGetTvAiringTodayQuery,
+  useGetTvOnTheAirQuery,
 } from "../services/requestTMDbAPI";
 import { Typography } from "@mui/material";
 
@@ -20,11 +20,12 @@ export default function Seriespage() {
   const { data: popularSeriesData } = useGetPopularQuery({
     media_type: "tv",
   });
-  const { data: latestSeriesData } = useGetLatestQuery({ media_type: "tv" });
-  const { data: tvAiringTodayData } = useGetTvAiringTodayQuery({});
   const { data: topRatedSeriesData } = useGetTopRatedQuery({
     media_type: "tv",
   });
+  const { data: tvOnTheAirData } = useGetTvOnTheAirQuery();
+  const { data: tvAiringTodayData } = useGetTvAiringTodayQuery();
+
 
   return (
     <>
@@ -35,7 +36,7 @@ export default function Seriespage() {
           color="white"
           sx={{ fontWeight: "500", mb: "1rem" }}
         >
-          TV Seasons or Series
+          TV Seasons & Series
         </Typography>
         <Carrousel>
           {trendingSeriesData?.results?.map((data, i) => (
@@ -51,14 +52,14 @@ export default function Seriespage() {
       </section>
       <section style={{ margin: "3rem 3rem 0" }}>
         <MovieList
-          categoryName="Latest"
-          data={latestSeriesData?.results}
+          categoryName="Top Rated"
+          data={topRatedSeriesData?.results}
         ></MovieList>
       </section>
       <section style={{ margin: "3rem 3rem 0" }}>
         <MovieList
-          categoryName="Top Rated"
-          data={topRatedSeriesData?.results}
+          categoryName="Tv On The Air "
+          data={tvOnTheAirData?.results}
         ></MovieList>
       </section>
       <section style={{ margin: "3rem 3rem 0" }}>

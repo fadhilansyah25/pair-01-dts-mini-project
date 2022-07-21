@@ -47,7 +47,7 @@ export default function Detailpage() {
         <section style={{ margin: "3rem 3rem 0" }}>
           <MovieList
             categoryName={`Similiar ${
-              media_type === "movie" ? "Movies" : "Series"
+              media_type === "movie" ? "Movies" : "TV or Series"
             }`}
             data={similiarsData?.results}
           ></MovieList>
