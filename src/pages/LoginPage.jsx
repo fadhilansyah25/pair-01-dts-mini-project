@@ -1,35 +1,21 @@
-import * as React from "react";
-import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
-import Paper from "@mui/material/Paper";
-import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
+import React from "react";
+import {
+  Button,
+  CssBaseline,
+  TextField,
+  FormControlLabel,
+  Typography,
+  Checkbox,
+  Link,
+  Paper,
+  Box,
+  Grid,
+} from "@mui/material";
 import Logo from "../images/Logo.svg";
-import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import GoogleIcon from "@mui/icons-material/Google";
-
-function Copyright(props) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
+import { signInWithGoogle, logInWithEmailAndPassword } from "../app/firebase";
+import { useNavigate } from "react-router-dom";
 
 const theme = createTheme({
   palette: {
@@ -38,13 +24,16 @@ const theme = createTheme({
 });
 
 export default function SignInSide() {
-  const handleSubmit = (event) => {
+  const navigate = useNavigate();
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+    const err = await logInWithEmailAndPassword(
+      data.get("email"),
+      data.get("password")
+    );
+    if (!err) navigate("/");
   };
 
   return (
@@ -135,17 +124,20 @@ export default function SignInSide() {
                 variant="contained"
                 startIcon={<GoogleIcon></GoogleIcon>}
                 sx={{ mb: 2, backgroundColor: "white" }}
+                onClick={signInWithGoogle}
               >
                 Sign in with Google
               </Button>
               <Grid container>
                 <Grid item xs>
-                  <Link href="#" variant="body2">
-                    Forgot password?
-                  </Link>
+                  <Link variant="body2">Forgot password?</Link>
                 </Grid>
                 <Grid item>
-                  <Link href="#" variant="body2">
+                  <Link
+                    variant="body2"
+                    component="button"
+                    onClick={() => navigate("/register")}
+                  >
                     {"Don't have an account? Sign Up"}
                   </Link>
                 </Grid>
@@ -156,5 +148,23 @@ export default function SignInSide() {
         </Grid>
       </Grid>
     </ThemeProvider>
+  );
+}
+
+function Copyright(props) {
+  return (
+    <Typography
+      variant="body2"
+      color="text.secondary"
+      align="center"
+      {...props}
+    >
+      {"Copyright © "}
+      <Link color="inherit" href="https://mui.com/">
+        Your Website
+      </Link>{" "}
+      {new Date().getFullYear()}
+      {"."}
+    </Typography>
   );
 }

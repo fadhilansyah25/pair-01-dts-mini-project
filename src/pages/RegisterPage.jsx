@@ -12,24 +12,8 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-
-function Copyright(props) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
+import { useNavigate } from "react-router-dom";
+import { registerWithEmailAndPassword } from "../app/firebase";
 
 const theme = createTheme({
   palette: {
@@ -38,13 +22,17 @@ const theme = createTheme({
 });
 
 export default function RegisterPage() {
+  const navigate = useNavigate();
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     console.log({
+      name: `${data.get("firstName")} ${data.get("lastName")}`,
       email: data.get("email"),
       password: data.get("password"),
     });
+    registerWithEmailAndPassword(`${data.get("firstName")} ${data.get("lastName")}`, data.get("email"), data.get("password"))
   };
 
   return (
@@ -133,7 +121,11 @@ export default function RegisterPage() {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link
+                  component="button"
+                  variant="body2"
+                  onClick={() => navigate("/login")}
+                >
                   Already have an account? Sign in
                 </Link>
               </Grid>
@@ -143,5 +135,23 @@ export default function RegisterPage() {
         <Copyright sx={{ mt: 5 }} />
       </Container>
     </ThemeProvider>
+  );
+}
+
+function Copyright(props) {
+  return (
+    <Typography
+      variant="body2"
+      color="text.secondary"
+      align="center"
+      {...props}
+    >
+      {"Copyright © "}
+      <Link color="inherit" href="https://mui.com/">
+        Your Website
+      </Link>{" "}
+      {new Date().getFullYear()}
+      {"."}
+    </Typography>
   );
 }

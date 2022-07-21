@@ -9,7 +9,8 @@ import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   sendPasswordResetEmail,
-  signout,
+  signOut,
+  updateProfile,
 } from "firebase/auth";
 import {
   getFirestore,
@@ -22,12 +23,12 @@ import {
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyCcOgnih0EWRFGLb0GU-hYVBD3qAVBDjeM",
-  authDomain: "movies-dts-rea2a-mini.firebaseapp.com",
-  projectId: "movies-dts-rea2a-mini",
-  storageBucket: "movies-dts-rea2a-mini.appspot.com",
-  messagingSenderId: "179352665664",
-  appId: "1:179352665664:web:1bf49a38cc94f13bcc69a5",
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_FIREBASE_APP_ID,
 };
 
 // Initialize Firebase
@@ -52,7 +53,6 @@ const signInWithGoogle = async () => {
     }
   } catch (error) {
     console.log(error);
-    alert(err.message);
   }
 };
 
@@ -60,14 +60,15 @@ const logInWithEmailAndPassword = async (email, password) => {
   try {
     await signInWithEmailAndPassword(auth, email, password);
   } catch (err) {
-    console.error(err);
     alert(err.message);
+    return err;
   }
 };
 
 const registerWithEmailAndPassword = async (name, email, password) => {
   try {
     const res = await createUserWithEmailAndPassword(auth, email, password);
+    await updateProfile(auth.currentUser, { displayName: name });
     const user = res.user;
     await addDoc(collection(db, "users"), {
       uid: user.uid,
@@ -76,8 +77,8 @@ const registerWithEmailAndPassword = async (name, email, password) => {
       email,
     });
   } catch (err) {
-    console.error(err);
     alert(err.message);
+    return err;
   }
 };
 
@@ -86,13 +87,13 @@ const sendPasswordReset = async (email) => {
     await sendPasswordResetEmail(auth, email);
     alert("Password reset link sent!");
   } catch (err) {
-    console.error(err);
     alert(err.message);
+    return err;
   }
 };
 
-const logout = () => {
-  signout(auth);
+const logOut = () => {
+  signOut(auth);
 };
 
 export {
@@ -102,5 +103,5 @@ export {
   logInWithEmailAndPassword,
   registerWithEmailAndPassword,
   sendPasswordReset,
-  logout,
+  logOut,
 };

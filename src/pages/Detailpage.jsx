@@ -13,13 +13,10 @@ export default function Detailpage() {
   const { id, media_type } = useParams();
 
   const { data: detailsData } = useGetDetailsTvOrMovieQuery({ id, media_type });
-
   const { data: recommendationsData } = useGetRecommendationsTvOrMovieQuery({
     id,
     media_type,
   });
-
-  console.log(detailsData);
 
   return (
     <>

@@ -1,24 +1,27 @@
 import React, { useState } from "react";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import Menu from "@mui/material/Menu";
-import MenuIcon from "@mui/icons-material/Menu";
-import Container from "@mui/material/Container";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import Tooltip from "@mui/material/Tooltip";
-import MenuItem from "@mui/material/MenuItem";
+import {
+  AppBar,
+  Box,
+  Toolbar,
+  IconButton,
+  Typography,
+  Menu,
+  Container,
+  Avatar,
+  Button,
+  Tooltip,
+  MenuItem,
+} from "@mui/material";
 import UserIcon from "../images/UserIcon.svg";
 import SearchIcon from "@mui/icons-material/Search";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import CardGiftcardIcon from "@mui/icons-material/CardGiftcard";
+import MenuIcon from "@mui/icons-material/Menu";
 import Logo from "../images/Logo.svg";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
-
+import { logOut, auth } from "../app/firebase";
+import { useAuthState } from "react-firebase-hooks/auth";
 const pages = [
   { title: "Home", nav: "/" },
   { title: "Series", nav: "/series" },
@@ -27,7 +30,12 @@ const pages = [
   { title: "My List", nav: "/mylist" },
 ];
 
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+const settings = [
+  { title: "Profile" },
+  { title: "Account" },
+  { title: "Dashboard" },
+  { title: "Logout", nav: logOut },
+];
 const theme = createTheme({
   components: {
     MuiIconButton: {
@@ -43,8 +51,8 @@ const theme = createTheme({
 export default function Navbar() {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
-  const [username, setUsername] = useState("Fadil Ardiansyah");
   const navigate = useNavigate();
+  const [user, loading] = useAuthState(auth)
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -162,70 +170,91 @@ export default function Navbar() {
             ))}
           </Box>
 
-          <Box sx={{ flexGrow: 0 }}>
-            <Box
-              sx={{
-                marginRight: "1rem",
-                display: { lg: "inline", xs: "none" },
-              }}
-            >
-              <ThemeProvider theme={theme}>
-                <IconButton size="large" aria-label="search" color="inherit">
-                  <SearchIcon />
+          {user ? (
+            <Box sx={{ flexGrow: 0 }}>
+              <Box
+                sx={{
+                  marginRight: "1rem",
+                  display: { lg: "inline", xs: "none" },
+                }}
+              >
+                <ThemeProvider theme={theme}>
+                  <IconButton size="large" aria-label="search" color="inherit">
+                    <SearchIcon />
+                  </IconButton>
+                  <IconButton
+                    size="large"
+                    aria-label="notifications"
+                    color="inherit"
+                  >
+                    <NotificationsIcon />
+                  </IconButton>
+                  <IconButton
+                    size="large"
+                    aria-label="GifBoxTwoTone"
+                    color="inherit"
+                  >
+                    <CardGiftcardIcon></CardGiftcardIcon>
+                  </IconButton>
+                </ThemeProvider>
+              </Box>
+              <Typography
+                sx={{
+                  display: { md: "inline", xs: "none" },
+                  mr: 1,
+                  fontSize: "0.9rem",
+                }}
+              >
+                {user.displayName}
+              </Typography>
+              <Tooltip title="Open settings">
+                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                  <Avatar alt="Remy Sharp" src={UserIcon} />
                 </IconButton>
-                <IconButton
-                  size="large"
-                  aria-label="notifications"
-                  color="inherit"
-                >
-                  <NotificationsIcon />
-                </IconButton>
-                <IconButton
-                  size="large"
-                  aria-label="GifBoxTwoTone"
-                  color="inherit"
-                >
-                  <CardGiftcardIcon></CardGiftcardIcon>
-                </IconButton>
-              </ThemeProvider>
+              </Tooltip>
+              <Menu
+                sx={{ mt: "45px" }}
+                id="menu-appbar"
+                anchorEl={anchorElUser}
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                open={Boolean(anchorElUser)}
+                onClose={handleCloseUserMenu}
+              >
+                {settings.map((setting) => (
+                  <MenuItem
+                    key={setting.title}
+                    onClick={
+                      setting.nav
+                        ? () => {
+                            setting.nav();
+                            handleCloseUserMenu();
+                          }
+                        : handleCloseUserMenu
+                    }
+                  >
+                    <Typography textAlign="center">{setting.title}</Typography>
+                  </MenuItem>
+                ))}
+              </Menu>
             </Box>
-            <Typography
-              sx={{
-                display: { md: "inline", xs: "none" },
-                mr: 1,
-                fontSize: "0.9rem",
-              }}
+          ) : (
+            <Button
+              color="error"
+              variant="contained"
+              sx={{ textTransform: "none", px: 5, borderRadius: 0 }}
+              onClick={()=> navigate("/login")}
             >
-              {username}
-            </Typography>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src={UserIcon} />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: "45px" }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
+              Sign In
+            </Button>
+          )}
         </Toolbar>
       </Container>
     </AppBar>
