@@ -1,18 +1,3 @@
-<<<<<<< HEAD
-import React, { useState, useEffect } from "react";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import Menu from "@mui/material/Menu";
-import MenuIcon from "@mui/icons-material/Menu";
-import Container from "@mui/material/Container";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import Tooltip from "@mui/material/Tooltip";
-import MenuItem from "@mui/material/MenuItem";
-=======
 import React, { useState } from "react";
 import {
   AppBar,
@@ -28,7 +13,6 @@ import {
   MenuItem,
   Link,
 } from "@mui/material";
->>>>>>> upstream/main
 import UserIcon from "../images/UserIcon.svg";
 import SearchIcon from "@mui/icons-material/Search";
 import NotificationsIcon from "@mui/icons-material/Notifications";
@@ -36,15 +20,10 @@ import CardGiftcardIcon from "@mui/icons-material/CardGiftcard";
 import MenuIcon from "@mui/icons-material/Menu";
 import Logo from "../images/Logo.svg";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-<<<<<<< HEAD
-import { useAuthState } from "react-firebase-hooks/auth";
-import { signOut } from "firebase/auth";
-import { auth } from "../config/firebase";
-import { useNavigate } from "react-router-dom";
-=======
 import { useNavigate } from "react-router-dom";
 import { logOut, auth } from "../app/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
+
 const pages = [
   { title: "Home", nav: "/" },
   { title: "TV & Series", nav: "/series" },
@@ -52,7 +31,6 @@ const pages = [
   { title: "New and Popular", nav: "/new-and-popular" },
   { title: "My List", nav: "/mylist" },
 ];
->>>>>>> upstream/main
 
 const settings = [
   { title: "Profile" },
@@ -73,25 +51,11 @@ const theme = createTheme({
 });
 
 export default function Navbar() {
-  const [user] = useAuthState(auth);
+  // const [user] = useAuthState(auth);
   const navigate = useNavigate();
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
-<<<<<<< HEAD
-  // const [username, setUsername] = useState("Fadil Ardiansyah");
-
-  const handleLogout = async () => {
-    try {
-      signOut(auth);
-      navigate("/login");
-    } catch (error) {
-      console.log(error);
-    }
-  };
-=======
-  const navigate = useNavigate();
   const [user, loading] = useAuthState(auth);
->>>>>>> upstream/main
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -107,8 +71,6 @@ export default function Navbar() {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
-
-  useEffect(() => console.log(user), []);
 
   return (
     <AppBar
@@ -294,47 +256,9 @@ export default function Navbar() {
               sx={{ textTransform: "none", px: 5, borderRadius: 0 }}
               onClick={() => navigate("/login")}
             >
-<<<<<<< HEAD
-              {user?.displayName}
-            </Typography>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src={UserIcon} />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: "45px" }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {settings.map((setting) => (
-                <MenuItem
-                  key={setting}
-                  onClick={
-                    setting === "Logout" ? handleLogout : handleCloseUserMenu
-                  }
-                >
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
-=======
               Sign In
             </Button>
           )}
->>>>>>> upstream/main
         </Toolbar>
       </Container>
     </AppBar>

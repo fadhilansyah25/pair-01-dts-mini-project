@@ -4,10 +4,7 @@ import genres from "../json/genre.json";
 import { useNavigate } from "react-router-dom";
 
 export default function HeroBanner({ data }) {
-<<<<<<< HEAD
-=======
   const navigate = useNavigate();
->>>>>>> upstream/main
   return (
     <Box alt="poster" sx={{ display: "flex", height: "80vh" }}>
       <Box
