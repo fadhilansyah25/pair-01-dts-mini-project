@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useState, useEffect } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -11,19 +12,54 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
+=======
+import React, { useState } from "react";
+import {
+  AppBar,
+  Box,
+  Toolbar,
+  IconButton,
+  Typography,
+  Menu,
+  Container,
+  Avatar,
+  Button,
+  Tooltip,
+  MenuItem,
+  Link,
+} from "@mui/material";
+>>>>>>> upstream/main
 import UserIcon from "../images/UserIcon.svg";
 import SearchIcon from "@mui/icons-material/Search";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import CardGiftcardIcon from "@mui/icons-material/CardGiftcard";
+import MenuIcon from "@mui/icons-material/Menu";
 import Logo from "../images/Logo.svg";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+<<<<<<< HEAD
 import { useAuthState } from "react-firebase-hooks/auth";
 import { signOut } from "firebase/auth";
 import { auth } from "../config/firebase";
 import { useNavigate } from "react-router-dom";
+=======
+import { useNavigate } from "react-router-dom";
+import { logOut, auth } from "../app/firebase";
+import { useAuthState } from "react-firebase-hooks/auth";
+const pages = [
+  { title: "Home", nav: "/" },
+  { title: "TV & Series", nav: "/series" },
+  { title: "Movies", nav: "/movies" },
+  { title: "New and Popular", nav: "/new-and-popular" },
+  { title: "My List", nav: "/mylist" },
+];
+>>>>>>> upstream/main
 
-const pages = ["Home", "Series", "Movies", "New and Popular", "My List"];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+const settings = [
+  { title: "Profile" },
+  { title: "Account" },
+  { title: "Dashboard" },
+  { title: "Logout", nav: logOut },
+];
 const theme = createTheme({
   components: {
     MuiIconButton: {
@@ -41,6 +77,7 @@ export default function Navbar() {
   const navigate = useNavigate();
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
+<<<<<<< HEAD
   // const [username, setUsername] = useState("Fadil Ardiansyah");
 
   const handleLogout = async () => {
@@ -51,6 +88,10 @@ export default function Navbar() {
       console.log(error);
     }
   };
+=======
+  const navigate = useNavigate();
+  const [user, loading] = useAuthState(auth);
+>>>>>>> upstream/main
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -80,18 +121,18 @@ export default function Navbar() {
     >
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <Box
-            component="img"
-            sx={{
-              display: { xs: "none", md: "flex" },
-              marginRight: {
-                xs: "10rem",
-              },
-            }}
-            alt="The house from the offer."
-            src={Logo}
-          />
-
+          <Link component="button" onClick={() => navigate("/")}>
+            <Box
+              component="img"
+              sx={{
+                display: { xs: "none", md: "flex" },
+                marginRight: {
+                  xs: "10rem",
+                },
+              }}
+              src={Logo}
+            />
+          </Link>
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <IconButton
               size="large"
@@ -121,9 +162,9 @@ export default function Navbar() {
                 display: { xs: "block", md: "none" },
               }}
             >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
+              {pages.map((page, id) => (
+                <MenuItem key={id} onClick={() => navigate(page.nav)}>
+                  <Typography textAlign="center">{page.title}</Typography>
                 </MenuItem>
               ))}
             </Menu>
@@ -155,10 +196,10 @@ export default function Navbar() {
           ></Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {pages.map((page) => (
+            {pages.map((page, id) => (
               <Button
-                key={page}
-                onClick={handleCloseNavMenu}
+                key={id}
+                onClick={() => navigate(page.nav)}
                 sx={{
                   my: 2,
                   color: "white",
@@ -166,45 +207,94 @@ export default function Navbar() {
                   textTransform: "none",
                 }}
               >
-                {page}
+                {page.title}
               </Button>
             ))}
           </Box>
 
-          <Box sx={{ flexGrow: 0 }}>
-            <Box
-              sx={{
-                marginRight: "1rem",
-                display: { lg: "inline", xs: "none" },
-              }}
-            >
-              <ThemeProvider theme={theme}>
-                <IconButton size="large" aria-label="search" color="inherit">
-                  <SearchIcon />
+          {loading ? null : user ? (
+            <Box sx={{ flexGrow: 0 }}>
+              <Box
+                sx={{
+                  marginRight: "1rem",
+                  display: { lg: "inline", xs: "none" },
+                }}
+              >
+                <ThemeProvider theme={theme}>
+                  <IconButton size="large" aria-label="search" color="inherit">
+                    <SearchIcon />
+                  </IconButton>
+                  <IconButton
+                    size="large"
+                    aria-label="notifications"
+                    color="inherit"
+                  >
+                    <NotificationsIcon />
+                  </IconButton>
+                  <IconButton
+                    size="large"
+                    aria-label="GifBoxTwoTone"
+                    color="inherit"
+                  >
+                    <CardGiftcardIcon></CardGiftcardIcon>
+                  </IconButton>
+                </ThemeProvider>
+              </Box>
+              <Typography
+                sx={{
+                  display: { md: "inline", xs: "none" },
+                  mr: 1,
+                  fontSize: "0.9rem",
+                }}
+              >
+                {user.displayName}
+              </Typography>
+              <Tooltip title="Open settings">
+                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                  <Avatar alt="Remy Sharp" src={UserIcon} />
                 </IconButton>
-                <IconButton
-                  size="large"
-                  aria-label="notifications"
-                  color="inherit"
-                >
-                  <NotificationsIcon />
-                </IconButton>
-                <IconButton
-                  size="large"
-                  aria-label="GifBoxTwoTone"
-                  color="inherit"
-                >
-                  <CardGiftcardIcon></CardGiftcardIcon>
-                </IconButton>
-              </ThemeProvider>
+              </Tooltip>
+              <Menu
+                sx={{ mt: "45px" }}
+                id="menu-appbar"
+                anchorEl={anchorElUser}
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                open={Boolean(anchorElUser)}
+                onClose={handleCloseUserMenu}
+              >
+                {settings.map((setting) => (
+                  <MenuItem
+                    key={setting.title}
+                    onClick={
+                      setting.nav
+                        ? () => {
+                            setting.nav();
+                            handleCloseUserMenu();
+                          }
+                        : handleCloseUserMenu
+                    }
+                  >
+                    <Typography textAlign="center">{setting.title}</Typography>
+                  </MenuItem>
+                ))}
+              </Menu>
             </Box>
-            <Typography
-              sx={{
-                display: { md: "inline", xs: "none" },
-                mr: 1,
-                fontSize: "0.9rem",
-              }}
+          ) : (
+            <Button
+              color="error"
+              variant="contained"
+              sx={{ textTransform: "none", px: 5, borderRadius: 0 }}
+              onClick={() => navigate("/login")}
             >
+<<<<<<< HEAD
               {user?.displayName}
             </Typography>
             <Tooltip title="Open settings">
@@ -240,6 +330,11 @@ export default function Navbar() {
               ))}
             </Menu>
           </Box>
+=======
+              Sign In
+            </Button>
+          )}
+>>>>>>> upstream/main
         </Toolbar>
       </Container>
     </AppBar>

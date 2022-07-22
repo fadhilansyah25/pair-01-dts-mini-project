@@ -1,10 +1,10 @@
-import { Typography } from "@mui/material";
 import React from "react";
-import CardMovie from "./CardMovie";
+import CastCard from "../components/CastCard";
 import Carousel from "react-multi-carousel";
+import { Typography } from "@mui/material";
 import "react-multi-carousel/lib/styles.css";
 
-export default function MovieList({ data, categoryName }) {
+export default function CastList({ data, categoryName }) {
   return (
     <>
       <Typography
@@ -37,35 +37,35 @@ export default function MovieList({ data, categoryName }) {
                 max: 3000,
                 min: 1400,
               },
-              items: 6.5,
+              items: 8.5,
             },
             laptop: {
               breakpoint: {
                 max: 1400,
                 min: 1200,
               },
-              items: 5.5,
+              items: 6.5,
             },
             notebook: {
               breakpoint: {
                 max: 1200,
                 min: 1024,
               },
-              items: 4.5,
+              items: 5.5,
             },
             tablet: {
               breakpoint: {
                 max: 1024,
                 min: 464,
               },
-              items: 3.5,
+              items: 4.5,
             },
             mobile: {
               breakpoint: {
                 max: 464,
                 min: 0,
               },
-              items: 1,
+              items: 2,
             },
           }}
           rewind={false}
@@ -73,13 +73,24 @@ export default function MovieList({ data, categoryName }) {
           rtl={false}
           showDots={false}
         >
-          {data?.map((data, i) =>
-            data?.poster_path ? (
-              <CardMovie key={i} data={data}></CardMovie>
-            ) : null
-          )}
+          {data
+            ?.slice(0, 21)
+            .map((data, i) =>
+              data.profile_path ? (
+                <CastCard key={i} data={data}></CastCard>
+              ) : null
+            )}
         </Carousel>
       ) : null}
+      <hr
+        style={{
+          marginTop: "2rem",
+          height: "1px",
+          borderWidth: 0,
+          color: "gray",
+          backgroundColor: "gray",
+        }}
+      />
     </>
   );
 }
