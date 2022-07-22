@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Button,
   CssBaseline,
@@ -10,6 +10,7 @@ import {
   Paper,
   Box,
   Grid,
+  Modal,
 } from "@mui/material";
 import Logo from "../images/Logo.svg";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
@@ -23,8 +24,27 @@ const theme = createTheme({
   },
 });
 
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "#141414",
+  border: "2px solid red",
+  boxShadow: 24,
+  p: 4,
+  color: "white",
+  display: "flex",
+  flexDirection: "column",
+  textAlign: "center",
+};
+
 export default function SignInSide() {
   const navigate = useNavigate();
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -33,7 +53,11 @@ export default function SignInSide() {
       data.get("email"),
       data.get("password")
     );
-    if (!err) navigate("/");
+    if (!err) {
+      navigate("/");
+    } else {
+      handleOpen();
+    }
   };
 
   return (
@@ -82,7 +106,7 @@ export default function SignInSide() {
             </Typography>
             <Box
               component="form"
-              noValidate
+              noValidate={false}
               onSubmit={handleSubmit}
               sx={{ mt: 1 }}
             >
@@ -148,6 +172,27 @@ export default function SignInSide() {
             </Box>
           </Box>
         </Grid>
+        <Modal
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box sx={style}>
+            <Typography id="modal-modal-description" sx={{ mb: 5 }}>
+              The email address or password is incorrect. Please retry...
+            </Typography>
+            <Button
+              color="error"
+              variant="contained"
+              onClick={() => {
+                handleClose();
+              }}
+            >
+              Retry
+            </Button>
+          </Box>
+        </Modal>
       </Grid>
     </ThemeProvider>
   );
@@ -163,7 +208,7 @@ function Copyright(props) {
     >
       {"Copyright © "}
       <Link color="inherit" href="https://mui.com/">
-      Movies. All Rights Reserved
+        Movies. All Rights Reserved
       </Link>{" "}
       {new Date().getFullYear()}
       {"."}

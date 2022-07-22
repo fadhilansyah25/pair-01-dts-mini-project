@@ -15,7 +15,6 @@ import {
   Modal,
 } from "@mui/material";
 import UserIcon from "../images/UserIcon.svg";
-import SearchIcon from "@mui/icons-material/Search";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import CardGiftcardIcon from "@mui/icons-material/CardGiftcard";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -24,6 +23,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
 import { logOut, auth } from "../app/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
+import SeacrhInput from "./SeacrhInput";
 const pages = [
   { title: "Home", nav: "/" },
   { title: "TV & Series", nav: "/series" },
@@ -192,19 +192,17 @@ export default function Navbar() {
               </Button>
             ))}
           </Box>
-
           {loading ? null : user ? (
-            <Box sx={{ flexGrow: 0 }}>
+            <Box sx={{ flexGrow: 0, display: "flex", alignItems: "center" }}>
               <Box
                 sx={{
                   marginRight: "1rem",
-                  display: { lg: "inline", xs: "none" },
+                  display: { lg: "flex", xs: "none" },
+                  alignItems: "center",
                 }}
               >
+                <SeacrhInput />
                 <ThemeProvider theme={theme}>
-                  <IconButton size="large" aria-label="search" color="inherit">
-                    <SearchIcon />
-                  </IconButton>
                   <IconButton
                     size="large"
                     aria-label="notifications"
@@ -228,7 +226,7 @@ export default function Navbar() {
                   fontSize: "0.9rem",
                 }}
               >
-                {user.displayName}
+                {user.displayName.split(" ")[0]}
               </Typography>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>

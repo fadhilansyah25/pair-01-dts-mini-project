@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState } from "react";
 import {
   Button,
   CssBaseline,
@@ -10,6 +10,7 @@ import {
   Box,
   Typography,
   Container,
+  Modal,
 } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
@@ -22,10 +23,30 @@ const theme = createTheme({
   },
 });
 
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "#141414",
+  border: "2px solid red",
+  boxShadow: 24,
+  p: 4,
+  color: "white",
+  display: "flex",
+  flexDirection: "column",
+  textAlign: "center",
+};
+
 export default function RegisterPage() {
   const navigate = useNavigate();
 
-  const handleSubmit = (event) => {
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     console.log({
@@ -33,11 +54,14 @@ export default function RegisterPage() {
       email: data.get("email"),
       password: data.get("password"),
     });
-    registerWithEmailAndPassword(
+    const err = await registerWithEmailAndPassword(
       `${data.get("firstName")} ${data.get("lastName")}`,
       data.get("email"),
       data.get("password")
     );
+    if (err) {
+      handleOpen();
+    }
   };
 
   return (
@@ -67,7 +91,7 @@ export default function RegisterPage() {
           </Typography>
           <Box
             component="form"
-            noValidate
+            noValidate={false}
             onSubmit={handleSubmit}
             sx={{ mt: 3 }}
           >
@@ -145,6 +169,27 @@ export default function RegisterPage() {
           </Box>
         </Box>
         <Copyright sx={{ mt: 5 }} />
+        <Modal
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box sx={style}>
+            <Typography id="modal-modal-description" sx={{ mb: 5 }}>
+              The email address or password is incorrect. Please retry...
+            </Typography>
+            <Button
+              color="error"
+              variant="contained"
+              onClick={() => {
+                handleClose();
+              }}
+            >
+              Retry
+            </Button>
+          </Box>
+        </Modal>
       </Container>
     </ThemeProvider>
   );
@@ -160,7 +205,7 @@ function Copyright(props) {
     >
       {"Copyright © "}
       <Link color="inherit" href="https://mui.com/">
-      Movies. All Rights Reserved
+        Movies. All Rights Reserved
       </Link>{" "}
       {new Date().getFullYear()}
       {"."}
