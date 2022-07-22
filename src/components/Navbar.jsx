@@ -12,6 +12,7 @@ import {
   Tooltip,
   MenuItem,
   Link,
+  Modal,
 } from "@mui/material";
 import UserIcon from "../images/UserIcon.svg";
 import SearchIcon from "@mui/icons-material/Search";
@@ -49,6 +50,22 @@ const theme = createTheme({
   },
 });
 
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "#141414",
+  border: "2px solid red",
+  boxShadow: 24,
+  p: 4,
+  color: "white",
+  display: "flex",
+  flexDirection: "column",
+  textAlign: "center",
+};
+
 export default function Navbar() {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
@@ -69,6 +86,10 @@ export default function Navbar() {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   return (
     <AppBar
@@ -236,7 +257,7 @@ export default function Navbar() {
                     onClick={
                       setting.nav
                         ? () => {
-                            setting.nav();
+                            handleOpen();
                             handleCloseUserMenu();
                           }
                         : handleCloseUserMenu
@@ -259,6 +280,28 @@ export default function Navbar() {
           )}
         </Toolbar>
       </Container>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <Typography id="modal-modal-description" sx={{ mb: 5 }}>
+            Are you sure want to Quit?
+          </Typography>
+          <Button
+            color="error"
+            variant="contained"
+            onClick={() => {
+              handleClose();
+              logOut();
+            }}
+          >
+            Yeah, Im Sure
+          </Button>
+        </Box>
+      </Modal>
     </AppBar>
   );
 }
