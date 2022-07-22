@@ -2,6 +2,7 @@ import * as React from "react";
 import { styled, alpha } from "@mui/material/styles";
 import { InputBase, Box } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
+import { useNavigate } from "react-router-dom";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -46,8 +47,12 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function SeacrhInput() {
+  const navigate = useNavigate();
   const handleSubmit = (event) => {
     event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    const query = data.get("search");
+    if (query !== "") navigate(`/search/${query}`);
   };
   return (
     <Box component="form" onSubmit={handleSubmit} sx={{ mx: 2 }}>
@@ -58,6 +63,7 @@ export default function SeacrhInput() {
         <StyledInputBase
           placeholder="Search…"
           inputProps={{ "aria-label": "search", style: { fontSize: 15.5 } }}
+          name="search"
         />
       </Search>
     </Box>

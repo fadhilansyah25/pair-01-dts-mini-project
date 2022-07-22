@@ -2,13 +2,14 @@ import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import Detailpage from "../pages/Detailpage";
 import Homepage from "../pages/Homepage";
-import LoginPage from "../pages/LoginPage";
-import RegisterPage from "../pages/RegisterPage";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../app/firebase";
 import Seriespage from "../pages/Seriespage";
 import Moviespage from "../pages/Moviespage";
 import useScrollToTop from "../hooks/useScrollToTop";
+import Searchpage from "../pages/Searchpage";
+import Loginpage from "../pages/Loginpage";
+import Registerpage from "../pages/Registerpage";
 
 export default function Routers() {
   useScrollToTop();
@@ -41,10 +42,18 @@ export default function Routers() {
         }
       />
       <Route
+        path="/search/:query"
+        element={
+          <PrivateRoute>
+            <Searchpage />
+          </PrivateRoute>
+        }
+      />
+      <Route
         path="/login"
         element={
           <ProtectLoginRegister>
-            <LoginPage />
+            <Loginpage/>
           </ProtectLoginRegister>
         }
       ></Route>
@@ -52,7 +61,7 @@ export default function Routers() {
         path="/register"
         element={
           <ProtectLoginRegister>
-            <RegisterPage />
+            <Registerpage/>
           </ProtectLoginRegister>
         }
       ></Route>

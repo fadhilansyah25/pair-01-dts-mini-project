@@ -40,7 +40,7 @@ const style = {
   textAlign: "center",
 };
 
-export default function SignInSide() {
+export default function Loginpage() {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
