@@ -39,7 +39,7 @@ const style = {
   textAlign: "center",
 };
 
-export default function Registerpage() {
+export default function RegisterPage() {
   const navigate = useNavigate();
 
   const [open, setOpen] = useState(false);

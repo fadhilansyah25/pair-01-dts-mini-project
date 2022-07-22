@@ -8,8 +8,8 @@ import Seriespage from "../pages/Seriespage";
 import Moviespage from "../pages/Moviespage";
 import useScrollToTop from "../hooks/useScrollToTop";
 import Searchpage from "../pages/Searchpage";
-import Loginpage from "../pages/Loginpage";
-import Registerpage from "../pages/Registerpage";
+import Loginpage from "../pages/LoginPage";
+import Registerpage from "../pages/RegisterPage";
 
 export default function Routers() {
   useScrollToTop();

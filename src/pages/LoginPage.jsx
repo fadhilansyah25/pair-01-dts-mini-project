@@ -40,7 +40,7 @@ const style = {
   textAlign: "center",
 };
 
-export default function Loginpage() {
+export default function LoginPage() {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);

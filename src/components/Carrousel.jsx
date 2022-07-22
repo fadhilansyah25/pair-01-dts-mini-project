@@ -7,7 +7,7 @@ export default function Carrousel({ children }) {
       sx={{ height: "80vh" }}
       IndicatorIcon={false}
       stopAutoPlayOnHover={false}
-      interval={6000}
+      interval={4000}
     >
       {children}
     </Carousel>
